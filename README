@@ -1,0 +1,19 @@
+333CB Ghitan Bogdan-Elvis-Dumitru
+
+I started by implemeting the init_loader function where i loaded the new
+handler for page faults.
+
+There are 3 cases that are possible
+  1.There is a invalid access to memory (page is not found in any segment) -> default handler
+  2.The segment does not have required perms -> default handler
+  3.The page is not mapped yet -> map the page with the permissions required
+
+I only checked for 3rd case, is the page is not mapped and I map it. If the search
+is over and the page is not found in any segment then it is 1st case so I call
+the default handler and let the OS take care of the page fault.
+
+When mapping I verify if the page is already mapped, in which case I also
+call the default handler and let the OS in charge. If is not mapped then I map it,
+mark it as mapped and read the data from the file to the address of the mapped page
+
+Finally I use mprotect to give the page the perms indicated.
